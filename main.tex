@@ -1,5 +1,6 @@
 \documentclass[10pt,a4paper,twoside]{report}
 \usepackage[utf8]{inputenc}
+%Algemene documentinstellingen als dubbelzijdig, codering, rapportsoort etc.
 
 \usepackage[dutch]{babel}
 \usepackage[backend=biber,style=apa,sorting=nty,natbib]{biblatex}
@@ -8,14 +9,15 @@
 %APA-richtlijnen en taalinstellingen
 
 \usepackage{afterpage}
-\newcommand\blankpage{%
+\newcommand\blankpage{
     \null
-    \thispagestyle{empty}%
+    \thispagestyle{empty}
     \newpage}
 %Code om blanke pagina's in te voegen
+%Code is \afterpage{\blankpage}
 
 \usepackage{graphicx}
-\graphicspath{ {./images/} }
+\graphicspath{ {./Images/} }
 %Om figuren in te voegen
 
 \usepackage{fancyhdr} %Voet- en kopteksten
@@ -23,6 +25,8 @@
 \usepackage{lastpage} %Variabele voor paginanummering
 \usepackage{booktabs} %Tabeloptimalisatie
 \usepackage{pdfpages} %Samenvoegen van PDF's 
+\usepackage{lipsum} %Lorem ipsum
+\usepackage[pages=some]{background} %Achtergrondafbeeldingen bij voorwoord
 
 \usepackage[linktoc=all]{hyperref}
 \hypersetup{
@@ -32,26 +36,48 @@
     urlcolor=cyan,
     citecolor=black,
     breaklinks=true,
-    pdftitle=/thetitle,
-    pdfauthor=/theauthor,
     bookmarksopen=true}
+
 %Links naar websites, bronnen, inhoudsopgave, pagina's etc.
 
-\title{Afstudeerwerkplan Seafood Connection}
-\author{Gerrit Post}
-\date{21 september 2018}
+\input{./Titelpagina/Definities.tex} %Alle variabelen in het document als titel, datum etc.
+
+\title{\titel}
+\author{\auteur}
+\date{\datum}
+%Documenteigenschappen worden hier gekopieerd uit Definities.tex
+
 %EIND VAN PREAMBLE
 
 
 \begin{document}
 \includepdf{Titelpagina/titelpagina.pdf}
 \afterpage{\blankpage}
-\setcounter{page}{2}
+\backgroundsetup{contents=\includegraphics{3},angle=0,scale=1,opacity=1}
+\BgThispage
+%Titelblad wordt geïmporteerd als PDF want die is oneside en dit document twoside, zie eerste regel
+%Na titelblad een lege pagina zodat er niets op de achterkant staat als hij dubbelzijdig wordt geprint
+
+\chapter*{Voorwoord}
+\thispagestyle{empty}
+\backgroundsetup{contents=\includegraphics{7},angle=0,scale=0.68,opacity=0.65,hshift=150}
+\BgThispage
+\lipsum[1]
+%\vfill
+%{\footnotesize\textsf{\textcolor{white}{Giraudier, Tim (2018). Cross Sound, Alaska.}}}
+
+%Voorwoord met achtergrondafbeelding
+
+\chapter*{Samenvatting}
+\thispagestyle{empty}
+\lipsum[1-4]
+
+\setcounter{page}{4} %Door importeren van PDF klopt paginanummer niet, hierbij gecorrigeerd
 \tableofcontents
 \thispagestyle{empty}
 
 \chapter*{Inleiding}
-\thispagestyle{empty}
+\addcontentsline{toc}{chapter}{Inleiding} %Ongenummerde chapters komen niet in de ToC, met deze code wel
 Ten behoeve van het definiëren en verkennen van de uit te voeren opdracht in het kader van het afstudeertraject, wordt in dit rapport met een brede blik gekeken naar de uitvoering hier van. In samenwerking met de finance afdeling van Seafood Connection wordt georiënteerd op de opdrachtformulering en wordt ook de opdrachtomgeving bekeken aan de hand van een bondige bedrijfsverkenning. Deze divergerende blik zal helpen om de opdracht in een zo’n breed mogelijke zin te bekijken. Een stapje terug doen voor perspectief als het ware.
 
 \chapter{Inventarisatie en aanleiding}
@@ -98,11 +124,24 @@ Seafood Connection is vijftig gemotiveerde werknemers sterk. Het kantoor op Urk 
 
 Het bedrijf maakt in sterke mate gebruik van automatisering, zo is er een bevoegdheidsmatrix waarin beschikkende medewerkers geautoriseerd of geblokkeerd zijn om bepaalde handelingen uit te voeren. Daarnaast zijn er limieten voor bepaalde handelingen als de hoeveelheid in te kopen vreemde valuta. In de quick scan geeft de organisatie weer dat (bijna) altijd gebruik wordt gemaakt van automatisering. \citep{quickscan}
 
-Uit het jaarrapport over 2017 worden de volgende financiële ratio’s ontleend. \\
-Op 31 december 2017 was het rendement op het totale vermogen \\
-(nettowinst + betaalde rente / balanstotaal) 5,6\%; 31 december 2016 4,9\%. \\
-De solvabiliteit (EV / TV) was ultimo 2017 24,6\% en ultimo 2016 20,8\%. \\
-De liquiditeit (vlottende bezittingen / kortlopende schulden) was ultimo 2017 55,4\% en ultimo 2016 52,9\%. \citep{jaarrapport2017}
+\begin{table}[h]
+    \centering
+    \caption{Kengetallen uit de jaarrekening over 2017}
+    \begin{tabular}{l r r}
+        \toprule
+        \textbf{Kengetal} & \textbf{Ultimo 2017} & \textbf{Ultimo 2016} \\
+        \midrule
+        Rendament TV & 5,6\% & 4,9\% \\
+        Solvabiliteit & 24,6\% & 20,8\% \\
+        Liquiditeit & 55,4\% & 52,9\% \\
+        \bottomrule
+    \end{tabular}
+    \label{tab:kengetallen}
+\end{table}
+
+Uit het jaarrapport over 2017 worden de financiële ratio’s uit tabel \ref{tab:kengetallen} ontleend. Deze cijfers gelden voor de peildatum van respectievelijk 31 december 2017 en 2016.
+
+Het rendement op het totale vermogen is berekend als ((nettowinst + betaalde rente) / balanstotaal), de solvabiliteit als (eigen vermogen / totaal vermogen), en de liquiditeit als (vlottende bezittingen / kortlopende schulden). \citep{jaarrapport2017}
 
 Om deze ratio’s te beoordelen moeten zij eerst in context worden geplaatst, deze kunnen niet één-op-één vergeleken worden met normen die worden gehanteerd voor een regulier handelsbedrijf. Het is voor een bedrijf als SFC namelijk aantrekkelijk om relatief veel schulden op zich te nemen ten opzichte van haar bezittingen. SFC koopt grootschalig in voor verscheidene producten op een groot aantal markten. Dit betekent dat wanneer een grote batch visproducten wordt gekocht, het gebruikelijk is dat levering pas na één maand plaatsvindt. Na levering blijft de voorraad doorgaans twee maanden op voorraad voor het verkocht wordt, waarbij betaling van deze order één tot twee maanden na de aflevering van deze goederen plaatsvindt. In feite ontvangt Seafood Connection vaak pas na vier tot zes maanden na investering pas haar geld terug. De ratio’s die hiermee verbonden zijn kunnen dus niet ontkoppeld worden aan de inherente eigenschappen van bulkinkoop op een internationale markt. \citep{jaarrapport2017}
 
