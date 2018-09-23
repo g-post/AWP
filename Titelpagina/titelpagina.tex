@@ -5,9 +5,12 @@
 \usepackage{graphicx}
 \graphicspath{ {../Images/} }
 
+\usepackage[linktoc=all]{hyperref}
+\hypersetup{colorlinks=false} %Links naar websites, bronnen, inhoudsopgave, pagina's etc.
+
 \usepackage{titling}
 \usepackage{changepage}
-\input{./Titelpagina/Definities.tex}
+\input{Titelpagina/Definities.tex}
 \title{\titel}
 \author{\auteur}
 \date{\datum}
@@ -21,13 +24,13 @@
     \hspace{12cm}
     \includegraphics[width=0.4\textwidth]{download} \\
     \begin{center}
-    \vspace*{1cm}
+    \vspace*{3cm}
     {\Huge\thetitle}
     
     \vspace*{0.4cm}
     \textnormal{\ondertitel}
     
-    \vspace{6cm}
+    \vspace{5cm}
     \textbf{Door} \\
     \theauthor \\
     \studentklas \\
