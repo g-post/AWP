@@ -12,6 +12,7 @@
 \newcommand\blankpage{
     \null
     \thispagestyle{empty}
+    %\addtocounter{page}{-1} %Weggehaald zodat paginanummer blijft doortellen op lege pagina's
     \newpage}
 %Code om blanke pagina's in te voegen
 %Code is \afterpage{\blankpage}
@@ -22,14 +23,16 @@
 
 \usepackage{fancyhdr} %Voet- en kopteksten
 \usepackage{csquotes} %Quotes die Babel respecteren
-\usepackage{lastpage} %Variabele voor paginanummering
-\usepackage{booktabs} %Tabeloptimalisatie
+\usepackage{lastpage} %Variabele voor paginanummering (om te zeggen bijv. pagina 5 van 63)
+\usepackage{booktabs} %Tabeloptimalisatie en opmaak
 \usepackage{pdfpages} %Samenvoegen van PDF's 
 \usepackage{lipsum} %Lorem ipsum
 \usepackage{color} %Tekstkleur
 \usepackage{microtype} %Tegen de underfull errors en om justifying te helpen
 \usepackage[pages=some]{background} %Achtergrondafbeeldingen bij voorwoord
-\usepackage{comment}
+\usepackage{comment} %Om delen van de tekst uit te schakelen
+\usepackage{titling} %Titels voor op de titelpagina
+\usepackage{changepage} %Horizontale marges tijdelijk veranderen op de titelpagina
 
 \usepackage[linktoc=all]{hyperref}
 \hypersetup{
@@ -43,6 +46,7 @@
 %Links naar websites, bronnen, inhoudsopgave, pagina's etc.
 
 \input{./Titelpagina/Definities.tex} %Alle variabelen in het document als titel, datum etc.
+\newcounter{bijlage}[section] %Om het aantal bijlages bij te houden
 
 \title{\titel}
 \author{\auteur}
@@ -53,16 +57,18 @@
 
 
 \begin{document}
+%\input{Titelpagina/titelpaginaSA.tex} %Dit kan alleen als de preable hetzelfde is
 \includepdf{./Titelpagina/titelpagina.pdf}
+%Titelblad wordt geïmporteerd als PDF want die is oneside en dit document twoside, zie eerste regel
+
 \afterpage{\blankpage}
 \backgroundsetup{contents=\includegraphics{3},angle=0,scale=1,opacity=1}
 \BgThispage
-%Titelblad wordt geïmporteerd als PDF want die is oneside en dit document twoside, zie eerste regel
 %Na titelblad een lege pagina zodat er niets op de achterkant staat als hij dubbelzijdig wordt geprint
 
 \chapter*{Voorwoord}
 \thispagestyle{empty}
-\backgroundsetup{contents=\includegraphics{7},angle=-2.5,scale=0.68,opacity=0.60,hshift=150}
+\backgroundsetup{contents=\includegraphics{7},angle=-2.5,scale=0.68,opacity=0.50,hshift=150}
 \BgThispage
 Het maken van een afstudeerproduct is een logische en verplichte laatste stap voor het afronden van mijn bacheloropleiding aan de Windesheim te Zwolle. Al voor de opdracht van start was gegaan was ik zeer geïnteresseerd om deze afstudeerstage uit te kunnen voeren bij een uitdagende en atypische opdrachtgever. Dit verlangen was vooral gegrond in het feit dat ik een affiniteit voor AO/BIV aan het ontwikkelen was en graag wilde toetsen of mijn kennis op dit vakgebied voldoende is. En waar beter deze kennis te toetsen dan bij een werkgever waar niet zomaar de geleerde typologieën gekopieerd en geplakt kunnen worden?
 Mijn zoektocht begon naar een organisatie die in dit profiel past en graag met mij samen zou willen werken aan een nuttig eindproduct.
@@ -75,11 +81,13 @@ Ik wens de lezer veel plezier bij het lezen van dit afstudeerwerkplan en vanzelf
 \noindent
 \textbf{Gerrit Post} \\
 \textit{Student Accountancy, Hogeschool Windesheim}
+%Voorwoord met achtergrondafbeelding
+
 
 %\vfill
 %{\footnotesize\textsf{\textcolor{white}{Giraudier, Tim (2018). Cross Sound, Alaska.}}}
 
-%Voorwoord met achtergrondafbeelding
+
 
 %\chapter*{Samenvatting}
 %\thispagestyle{empty}
@@ -89,16 +97,14 @@ Ik wens de lezer veel plezier bij het lezen van dit afstudeerwerkplan en vanzelf
 \tableofcontents
 \thispagestyle{empty}
 
-
 \chapter*{Inleiding}
 \addcontentsline{toc}{chapter}{Inleiding} %Ongenummerde chapters komen niet in de ToC, met deze code wel
 Om duidelijk de uit te voeren opdracht te definiëren en te verkennen wordt in dit verslag met een brede blik gekeken de probleemformulering, -omgeving, en er wordt onderzocht wat er concreet gaat spelen bij dit onderzoek. In samenwerking met de finance afdeling van Seafood Connection (hierna als afkorting: SFC) wordt georiënteerd op de opdrachtformulering en wordt ook de opdrachtomgeving bekeken aan de hand van een uitgebreide bedrijfsverkenning. 
 
 Om de lezer een goed beeld te geven van de opdrachtomgeving wordt eerst uitgebreid, maar doelgericht, de bedrijfsachtergrond beschreven. Vervolgens wordt de eerste stap van de onderzoekscyclus uitgewerkt volgens het model van Nel Verhoeven waar de probleemomschrijving breed en diep wordt uitgewerkt. In hoofdstuk drie wordt dit probleem omgezet in een concreet ontwerp waarin concreet wordt nagedacht over de invulling van de afstudeeropdracht- en periode. De competentieontwikkeling in hoofdstuk vier beschrijft de manier waarop de afstudeerstagiair gaat werken aan de competentie- en ontwikkelingspunten. Als slot vindt u de bronnenlijst, de bijlagen die verdiepend zijn voor dit plan, en de tijdsplanning voor de afstudeerperiode. 
 
-
 \chapter{Bedrijfsachtergrond}
-\section{De onderneming}
+    \section{De onderneming}
 \subsection{Omschrijving}
 Opgericht in 1995, door huidig CEO J. (Jan) Kaptijn en wijlen C. (Chris) Goos met het innovatieve idee om een geselecteerd assortiment visproducten aan te bieden over de hele wereld zonder zelf ook maar een enkele visverwerkingsband te moeten aanschaffen. Seafood Connection werkt nauw samen met landen over de hele wereld om lokaal visproducten aan te kunnen bieden met een hoge kwaliteitsstandaard. Deze standaard wordt gegarandeerd door contacten van het bedrijf zelf grondige controles uit te laten voeren bij de leveranciers op locatie. Daarnaast wordt het productie- en verwerkingsproces gehouden aan hoge Europese standaarden als IFS, BRC, MSC en HACCP. \citep{sfcwebsite}
 
@@ -132,7 +138,7 @@ Uit het jaarrapport over 2017 worden de financiële ratio’s uit tabel \ref{tab
 Het rendement op het totale vermogen is berekend als ((nettowinst + betaalde rente) / balanstotaal), de solvabiliteit als (eigen vermogen / totaal vermogen), en de liquiditeit als ((vlottende bezittingen + liquide middelen) / kortlopende schulden). \citep{jaarrapport2017}
 
 \newpage
-\section{De organisatie}
+    \section{De organisatie}
 Het is belangrijk om te verkenning hoe de organisatie is opgebouwd, niet alleen omdat dit een opdracht is die kijkt naar de administratieve \textit{organisatie}, maar ook omdat de organisatie van Seafood Connection veranderd is sinds de laatste keer dat er kritisch is gekeken naar de AOIB. Sinds die tijd is er haast een verdubbeling geweest van het aantal medewerkers van Seafood Connection B.V., de omzet is verdubbeld, en de indeling van afdelingen is veranderd door deze opnieuw in te richten zodat zij onder andere beter kunnen focussen op deelmarkten, (nieuwe) producten, en geografische gebieden. Om dit alles overzichtelijk te maken voor de probleemomgeving wordt in dit hoofdstuk de organisatie van Seafood Connection B.V. uitgewerkt. 
 
 \subsection{Typering}
@@ -146,82 +152,73 @@ Seafood Connection is een handelsbedrijf in diverse diepvries visproducten met d
 
 Volgens de modellen van Starreveld is SFC een \textit{Handelsbedrijf op rekening}. Belangrijke aanknopingspunten voor de interne controle zijn de geautoriseerde brutomarge en prijsprocedure; de harde functiescheiding tussen de afdelingen: inkoop, opslag, verkoop en administratie; én de inventarisatie als het sluitstuk van de geld-goederenbeweging. In de grotendeels zelf-gerapporteerde quick scan geeft SFC zelf aan dat procedures verankerd in het systeem liggen, maar tegelijkertijd flexibel zijn voor optimalisatie; er is een sterke functiescheiding tussen inkoop, opslag en administratie. Echter geeft zij zelf aan dat er sprake is van een open magazijn, dat niet in eigen beheer is, en door derden alleen beheerd wordt door de magazijnmeester, terwijl het magazijn door verschillende mensen wordt geïnventariseerd, en ook er is sóms onafhankelijke controle van de verkoopprijzen. \citep{bivperspectief,quickscan}
 
-Een ander belangrijk detail voor de Administratieve Organisatie is dat het bedrijf in sterke mate gebruik maakt van automatisering. Zo is er een bevoegdheidsmatrix waarin beschikkende medewerkers geautoriseerd of geblokkeerd zijn om bepaalde handelingen uit te voeren. Hier valt de opmerking te plaatsen dat er voor het afschermen van valutarisico's geen limitieten zijn voor de hoeveelheid in te kopen valuta. Dit is opzettelijk gekozen zodat de inkopers snel kunnen handelen bij veranderende koersen en niet een bureaucratisch proces hoeven te doorlopen om grote bedragen in te kopen. In de quick scan geeft de organisatie weer dat (bijna) altijd gebruik wordt gemaakt van automatisering. \citep{quickscan}
+Een ander belangrijk detail voor de Administratieve Organisatie is dat het bedrijf in sterke mate gebruik maakt van automatisering. Zo is er een bevoegdhedenmatrix waarin beschikkende medewerkers geautoriseerd of geblokkeerd zijn om bepaalde handelingen uit te voeren. Hier valt de opmerking te plaatsen dat er voor het afschermen van FX-risico's geen limieten zijn voor de hoeveelheid in te kopen valuta. Dit is opzettelijk gekozen zodat de inkopers snel kunnen handelen bij veranderende koersen en niet een bureaucratisch proces hoeven te doorlopen om grote bedragen in te kopen. In de quick scan geeft de organisatie weer dat (bijna) altijd gebruik wordt gemaakt van automatisering. \citep{quickscan}
 
 \subsection{Inrichting}
 Seafood Connection is vijftig gemotiveerde werknemers sterk. Het kantoor op Urk vervult alle bedrijfsfuncties grotendeels op één locatie; er zijn enkele medewerkers werkzaam bij een klein, lokaal productieproces, namelijk bij de zagerij van Coldstore Urk waar een groot deel van de voorraad van SFC zich bevindt. De organisatie heeft vier niveaus: het managementteam (MT) dat de strategie formuleert, de unitmanagers (UMO) die hun afdelingen aansturen, managers die het aanspreekpunt zijn voor hun deelprocessen in de verschillende afdelingen, én assistants die de afdelingen ondersteunen met verschillende werkzaamheden. SFC is een lijn-staforganisatie met een gedeelde P-, G-, en M-indeling opgedeeld in de afdelingen: inkoop, opslag, verkoop, finance, ICT and production, HRM, compliance, en marketing verdeeld over vier segmenten: wholesale, retail, industry, en group companies (geografisch beheer). \citep{quickscan}
-
-\section{De branche}
+    \section{De branche}
 Kenmerken voor succes in de branche zijn ogenschijnlijk het hebben van een affiniteit voor duurzaamheid, naleving van kwaliteitsstandaarden en goed toegankelijk zijn zodat visproducten in elk jaargetijde geleverd kunnen worden. In mindere mate is er ook sprake van prijsconcurrentie, omdat alle visverwerkers uit dezelfde vaargebieden de vis vangen. 
 
 Seafood Connection is niet de enige aanbieder van vis. SFC opereert op Urk, één van de grootste centrums voor de visverwerking in Nederland, de CFO van Seafood Connection zegt hier zelf over dat het een gezonde hoeveelheid concurrentie voor de kiezen heeft. Het is dan ook niet verrassend dat de onderneming als grootste succescriteria heeft gekozen om te winnen in de markt, dit plaatst zij boven criteria als het beschikken over een zo uniek en nieuw mogelijk productassortiment of efficiënte bedrijfsvoering. 
 
 De missie van Seafood Connection is om het volgende te anticiperen: klantbelangen, de behoefte aan duurzame visproducten, en nieuwe trends. De onderneming wil dit realiseren door nieuwe partners te verkrijgen in cruciale markten in Europa, Amerika en Azië. Tevens worden nieuwe keteninnovaties verkregen door fusies en overnames in de visindustrie. \citep{sfcwebsite}
 
-\bigskip
-\noindent
-\color{red}
-Indien relevant ook nog: Gevolgde strategie, concurrentie, marktfactoren, belangrijke regelgeving. Oordeel van de accountant
-\color{black}
-
 \chapter{Onderzoeksvoorstel}
-\section{De aanleiding}
+    \section{De aanleiding}
+
+\subsection{Ontstaan opdracht}
+Deze opdracht is ontstaan vanuit de finance afdeling in het afgelopen jaar. Deze handelt registrerend en controlerend ten behoeve van de geldgoederenstroom. De intern beschikkende afdelingen –-- inkoop en verkoop --– werken nauw samen met finance voor de bewaking en afdekking van valuta- en koersrisico (hierna als afkorting: FX). Het management en de afdeling finance hebben samen een voorkeur voor een formeel vastgelegd beleid en zochten hiervoor een passende afstudeerder. Daarnaast was de licht verouderde AOIB toe aan vernieuwing.
+
 \subsection{Probleemomschrijving} \label{beschr:problemen}
-De AOIB bij Seafood Connection is in lichte mate verouderd, concreet betekent dit dat sinds de laatste update er nieuwe afdelingen zijn ontstaan, er nieuwe functies zijn gecreëerd of zijn veranderd, en dat het organogram veranderd is. Het bedrijf is sinds de laatste update verdubbeld qua omzet en personeel. Een update is dus hoognodig om te voorkomen dat de vastgelegde AOIB niet overeenkomt met de werkelijkheid. Wanneer de vastgelegde AO niet overeenkomt met de werkelijkheid zal dit tot gevolg hebben dat er geen fundament is voor de interne beheersing van de bedrijfsvoering. \citep{bivpraktijk}
+De AOIB bij Seafood Connection is in lichte mate verouderd, concreet betekent dit dat sinds de laatste update er nieuwe afdelingen zijn ontstaan, er nieuwe functies zijn gecreëerd of zijn veranderd, en dat het organogram veranderd is. Het bedrijf is sinds de laatste update verdubbeld qua omzet en personeel. Een update is dus hoognodig om te voorkomen dat de vastgelegde AOIB niet overeenkomt met de werkelijkheid. 
+Het vastleggen van de AOIB is niet meer dan een momentopname van de organisatie, het hebben van een goed omschreven AO leidt dus niet automatisch tot interne beheersing. Het denken over, en vastleggen van deze AOIB kan wel enige bewustwording stimuleren zodat er kritisch gaat nagedacht worden over hoe de organisatie wordt ingericht. \citep{bivpraktijk}
 
 Juist door deze verouderde AO is er een verschil tussen de daadwerkelijke bedrijfsprocessen en de formele vastlegging hiervan. Het grootste knelpunt hier is de vastlegging van de organisatorische maatregelen rond de financiële geldstromen. Zoals eerder beschreven in paragraaf \ref{beschr:activiteiten} haalt Seafood Connection haar bestaansgrond uit het feit dat er op grote schaal wordt ingekocht en verkocht op een internationale markt. De geldgoederenstroom is een cruciaal deel van de bedrijfsvoering die op het moment niet uitgebreid en doordacht is vastgelegd. \citep{aoibsfc}
 
-De organisatorische maatregelen rond de financiële geldstromen komen voort uit de AOIB, de aflegging van het beleid over financiële geldstromen is dus onlosmakelijk van de administratieve organisatie. Momenteel is er nog niet een vastgelegd document omtrent de \textit{treasury} dat aansluit op het beleid rondom geldzaken. Treasurybeleid is de manier waarop een onderneming haar \textit{treasures} (of ook: schatten) beheert. De praktische invulling van het treaurybeleid wordt omschreven in het door het management opgestelde treasury statuut. 
+De organisatorische maatregelen rond de financiële geldstromen komen voort uit de AOIB, de aflegging van het beleid over financiële geldstromen is dus onlosmakelijk van de administratieve organisatie. 
+
+\newpage
+Momenteel is er nog niet een vastgelegd document omtrent de \textit{treasury} dat aansluit op het beleid rondom geldzaken. Treasurybeleid is de manier waarop een onderneming haar \textit{treasures} (of ook: schatten) beheert. De praktische invulling van het treaurybeleid wordt omschreven in het door het management opgestelde treasury statuut. 
 Dit statuut is \textbf{intern} gericht door in kaart te brengen hoe de verschillende processen rond de financiële beheersing horen te functioneren, er wordt bijvoorbeeld beschreven wie welke functie heeft in het geldgoederenproces en welke controles daarop uitgevoerd worden. \\
-Ook is het statuut \textbf{extern} gericht aan stakeholders door de verantwoording die wordt afgelegd, door het management, over het geldbeheer. \citep{ede,handreiking}
-\newpage \noindent
+Ook is het statuut \textbf{extern} gericht aan stakeholders door de verantwoording die wordt afgelegd, door het management, over het geldbeheer. \citep{jans}
+
+\noindent
 In deze en volgende rapportage wordt de volgende definitie gehanteerd voor de term treasury statuut: 
 
 \begin{displayquote}
 Het treasury statuut is een door het management opgesteld rapport waarin de bevoegdheden, verantwoordelijkheden, toezichtmaatregelen, de sturing, en beheersing geformuleerd worden ten aanzien van financiële vermogenswaarden, financiële geldstromen, financiële posities en de hieraan verbonden risico’s. \\
-\citep{handreiking} \label{def:treasury}
+\citep{jans,buunk} \label{def:treasury}
 \end{displayquote}
 \noindent
 Zie ook \hyperlink{bij:treasury}{bijlage 1} voor een overzichtelijke uitwerking van het begrip treasury statuut.
 
-Samenvattend worden de huidige bestaande organisatorische maatregelen en processen in kaart gebracht. Daarnaast is het management van SFC bewust dat er op een navolgbare en verantwoordelijke manier omgegaan moet worden met financiële middelen; immers handelt het bedrijf met een uitputbare hoeveelheid vreemde valuta en is er een hoge mate van liquiditeit vereist om het bestaan van het bedrijf in de toekomst te kunnen garanderen. Het treasury statuut is onlosmakelijk verbonden met de AOIB, het is daarom noodzakelijkk dit product pas wordt opgesteld wanneer de AO weer aansluit op de werkelijkheid \citep{watisonderzoek,buunk,financiering}.
+Samenvattend worden de huidige bestaande organisatorische maatregelen en processen in kaart gebracht. Daarnaast is het management van SFC bewust dat er op een navolgbare en verantwoordelijke manier omgegaan moet worden met financiële middelen; immers handelt het bedrijf met een uitputbare hoeveelheid vreemde valuta en is er een hoge mate van liquiditeit vereist om het bestaan van het bedrijf in de toekomst te kunnen garanderen. Het treasury statuut is onlosmakelijk verbonden met de AOIB, het is daarom noodzakelijk dit product pas wordt opgesteld wanneer de AO weer aansluit op de werkelijkheid \citep{watisonderzoek,buunk,financiering}.
 
 \subsection{Betrokken partijen}
 Om de aanleiding duidelijk te krijgen is het belangrijk om in kaart te brengen wie precies de problemen hebben, welke rol zij spelen bij deze opdracht, en of er met deze partijen rekening moet worden gehouden. Hoofdzakelijk is het management de meest betrokken partij, omdat de opdracht vanuit de leiding ontstaan is en zij degene zijn die de AO nodig hebben om de onderneming te doen functioneren en te beheersen. \citep{bivperspectief}. De betrokken partijen bij dit probleem zijn echter niet alleen de leden van het management. De inrichting en het vormgeven van de organisatie heeft direct invloed op alle bedrijfsprocessen en de werknemers werkzaam in de waardeketen. Het is voor de beheersing van de processen belangrijk dat de afstudeerstagiair gesprekken aangaat met niet alleen de afdelingshoofden, maar ook de assistenten die direct onder leiding van het middenmanagement staan. Bij de dagelijkse werkzaamheden wordt niet bewust nagedacht over de administratieve maatregelen die voor SFC gelden, om deze reden is onderzoek noodzakelijk om onder andere te kijken of er in de praktijk bijvoorbeeld de navolging plaats vindt van de al dan niet aanwezige functiescheiding. Sturend in het onderzoek is het management die de informatieverstrekkers zijn en de uiteindelijke afnemer zullen zijn van het eindproduct. 
 
-Een aantal partijen zijn \underline{niet} (volledig) betrokken bij het afstudeerproduct. Ten eerste is de primaire accountant van SFC niet deel van de belangendriehoek (de stagiair, de opdrachtgever, de opleidingsinstantie). Deze keuze is bewust door het management gemaakt omdat de AOIB intern gericht is en het treasury statuut een aflegging van de verantwoording is vanuit het management. Hoewel de accountant niet deel is van de belangendriehoek, zijn zij wel deel van de stakeholders. Elk jaar wordt door de accountant van de Seafood Connection groep een interimcontrole uitgevoerd. Bij deze controle wordt onder meer gekeken naar de rol van organisatorische inrichting en de kwaliteit van bedrijfsprocessen. \citep{jaarrapport2017}
+Een aantal partijen zijn \underline{niet} (volledig) betrokken bij het afstudeerproduct. Ten eerste is de primaire accountant van SFC niet deel van de belangendriehoek (de stagiair, de opdrachtgever, de opleidingsinstantie). Deze keuze is bewust door het management gemaakt omdat de AOIB intern gericht is en het treasury statuut een aflegging van de verantwoording is vanuit het management. Hoewel de accountant niet deel is van de belangendriehoek, zijn zij wel geïnteresseerd in de uitkomsten van het onderzoek. Elk jaar wordt door de accountant van de Seafood Connection groep een interimcontrole uitgevoerd. Bij deze controle wordt onder meer gekeken naar de rol van organisatorische inrichting en de kwaliteit van bedrijfsprocessen. \citep{jaarrapport2017}
 
 Ook de deelnemingen, groepsmaatschappijen, joint ventures, en andere verbonden onderneming zijn niet deel van het onderzoek. Het productverslag is enkel de interne beheersing van Seafood Connection B.V.
-
-\subsection{Ontstaan opdracht}
-Deze opdracht is ontstaan vanuit de finance afdeling in het afgelopen jaar. Deze handelt registrerend en controlerend ten behoeve van de geldgoederenstroom. De intern beschikkende afdelingen –-- inkoop en verkoop --– werken nauw samen met finance voor de bewaking en afdekking van valuta- en koersrisico. Het management en de afdeling finance hebben samen een voorkeur voor een formeel vastgelegd beleid en zochten hiervoor een passende afstudeerder. Daarnaast was de licht verouderde AOIB toe aan vernieuwing.
-
-
-\section{De doelstelling}
-Zoals hiervoor beschreven wordt de bestaande AOIB bijgewerkt waarbij vervolgens een zogenaamde treasury statuut wordt opgesteld (zie paragraaf \ref{def:treasury}). Het statuut komt voort uit de AOIB. In dit treasury statuut legt het management verantwoording af over het kasmiddelenbeheer en dus ook over hoe valutarisico wordt bestreden. Deze aflegging van de verantwoording over de financiële middelen moet in lijn zijn met de getroffen, organisatorische maatregelen en de manier waarop het management idealistisch de geldstromen bewaakt en monitort. Het management geeft zelf aan dat het opstellen van dit statuut een hoognodig deel is van het onderzoek, aangezien er al een bestaande AO aanwezig is en dat het kasmanagement, hoewel grotendeels geautomatiseerd, nog niet formeel is vastgelegd. Bij de uitwerking van de update van de AO wordt door de organisatorische veranderingen (beschreven in paragraaf \ref{beschr:problemen}) ook rekening gehouden met nieuwe afdelingen, veranderde afdelingen, nieuwe organisatiestructuren, afdelingen die gericht zijn op nieuwe producten en nieuwe markten.
+    \section{De doelstelling}
+Zoals hiervoor beschreven wordt de bestaande AOIB bijgewerkt waarbij vervolgens een zogenaamde treasury statuut wordt opgesteld (zie paragraaf \ref{def:treasury}). Het statuut komt voort uit de AOIB. In dit treasury statuut legt het management verantwoording af over het kas- en geldmiddelenbeheer en dus ook over hoe FX-risico wordt bestreden. Deze aflegging van de verantwoording over de financiële middelen moet in lijn zijn met de getroffen, organisatorische maatregelen en de manier waarop het management idealistisch de geldstromen bewaakt en monitort. Het management geeft zelf aan dat het opstellen van dit statuut een hoognodig deel is van het onderzoek, aangezien er al een bestaande AO aanwezig is en dat het kasmanagement, hoewel grotendeels geautomatiseerd, nog niet formeel is vastgelegd. Bij de uitwerking van de update van de AO wordt door de organisatorische veranderingen (beschreven in paragraaf \ref{beschr:problemen}) ook rekening gehouden met nieuwe afdelingen, veranderde afdelingen, nieuwe organisatiestructuren, afdelingen die gericht zijn op nieuwe producten en nieuwe markten.
 
 Bij deze ontwerpende opdracht is aan het einde van het afstudeertraject de AOIB bijgewerkt en in brede zin in kaart gebracht. Nadenken over de structuren en maatregelen, zoals dat in een AO-beschrijving gebeurt, is voor veel bedrijven belangrijk om niet alleen te kunnen groeien in de toekomst, maar ook om het bestaan van de onderneming enigszins te kunnen garanderen en om te toetsen of er niet ongeoorloofd middelen uit de onderneming wegvloeien.
 
 Belangrijk om in gedachten te houden bij deze opdracht is dat deze opdracht zowel intern als extern is gericht. Intern wordt verslag gedaan over de administratieve organisatie en deze wordt geüpdatet. Het is dus niet de bedoeling dat derden dit document voor handen krijgen. Het op te stellen treasury statuut is echter wel bedoeld voor derden want het is een verantwoording van het management over hoe er wordt omgegaan met financiële middelen. Stakeholders kunnen met dit document helderheid krijgen op het valutabeheer van de onderneming. Bij de uitwerking van deze twee deelproducten moet de bedoelde doelgroep wel in het oog worden gehouden.
 
-Om deze twee producten goed in kaart te brengen worden interviews en enquêtes gehouden met zowel unitmanagers (UMO’s) en assistenten. Het doel hiervan is om de werkelijk aanwezige AO in kaart te brengen. Bij de vraagstelling moet op een zo’n objectief mogelijke manier, en vanuit een theoretisch kader, gekeken worden hoe deze AO per afdeling is ingericht.
+Om deze twee producten goed in kaart te brengen worden interviews en enquêtes gehouden. het doel hiervan is om de werkelijk aanwezige AO in kaart te brengen. Bij de vraagstelling moet op een objectieve en neutrale manier gekeken worden hoe deze administratieve organisatie per afdeling is ingericht.
 
-
-\section{De hoofdvraag}
-\textbf{Uit welke aspecten is de bestaande Administratieve Organisatie en Interne Beheersing van Seafood Connection opgebouwd en waar zijn wijzigingen en/of aanvullingen wenselijk, mede in het kader van geldmiddelenbeheer voor financiële vermogenswaarden, geldstromen, en de hieraan verbonden risico's?}
+    \section{De hoofdvraag}
+\textnormal{\large{Wat is de kwaliteit van het interne betrouwbaarheidssysteem bij Seafood Connection in het algemeen waarbij ook het geldmiddelenbeheer in oog wordt gehouden?}}
 
 \bigskip
 \noindent
 \color{red}
-Uit welke aspecten is de bestaande Administratieve Organisatie en Interne Beheersing van Seafood Connection opgebouwd en waar zijn wijzigingen en/of aanvullingen wenselijk, mede in het kader van geldmiddelenbeheer?
-
-\bigskip
-\noindent
-Hoe ziet de bestaande Administratieve Organisatie en Interne Beheersing van Seafood Connection er uit en waar zijn wijzigingen en/of aanvullingen wenselijk, en hoe kan deze AO gebruikt worden bij de verantwoording over het treasurymanagement?
-
+Uit welke aspecten is de bestaande Administratieve Organisatie en Interne Beheersing van Seafood Connection opgebouwd en waar zijn wijzigingen en/of aanvullingen wenselijk, mede in het kader van geldmiddelenbeheer voor financiële vermogenswaarden, geldstromen, en de hieraan verbonden risico's?
 \color{black}
 
-\section{De deelvragen}
+    \section{De deelvragen}
 \begin{enumerate}
     \item Gezien de bedrijfsactiviteiten van Seafood Connection en de hierbij passende relevante typologie, welke organisatorische maatregelen en aanknopingspunten worden dan verwacht voor de interne beheersing?
     \item Hoe wordt de bestaande AOIB aangevuld gezien de verwachte maatregelen vanuit het theoretisch kader en de daadwerkelijk bestaande AO aan de hand van interviews en enquêtes?
@@ -231,13 +228,22 @@ Hoe ziet de bestaande Administratieve Organisatie en Interne Beheersing van Seaf
     \color{black}
 \end{enumerate}
 
-
-
-
 \chapter{Onderzoeksontwerp}
-
 %per deelvraag de randvoorwaarden (budget, tijdsplanning en toegankelijkheid bronnen e.d.) en de gekozen dataverzamelingsmethode(n), begipsafbakening
 
+
+\begin{enumerate}
+    \item Controle-omgeving
+    \item Risicoanalyse
+    \item Preventieve en repressieve maatregelen van IC
+    \item Informatie en communicatie
+        \begin{itemize}
+            \item Compliance: volgen van NL-GAAP in de externe jaarrekening met betrekking tot verwerking in te kopen / ingekochte vreemde valuta. Wordt nu verwerkt als \textit{niet uit de balans blijkende verplichtingen}, maar er hangt natuurlijk ook een niet uit de balans blijkend recht aan.
+        \end{itemize}
+    \item Monitoring
+\end{enumerate}
+
+\begin{comment}
 \begin{enumerate}
     \item Gezien de bedrijfsactiviteiten van Seafood Connection en de hierbij passende relevante typologie, welke organisatorische maatregelen en aanknopingspunten worden dan verwacht voor de interne beheersing?
     \begin{enumerate}
@@ -249,7 +255,7 @@ Hoe ziet de bestaande Administratieve Organisatie en Interne Beheersing van Seaf
         \end{itemize}
         \item Welke processen en afdelingen zijn aanwezig in de organisatie?
         \begin{itemize}
-            \item Beschikkend, bewarend, uitvoerend, registrerend, controlerend ten op zichte van wat? Wie zijn de kernspelers in de geldgoederenbeweging?
+            \item Beschikkend, bewarend, uitvoerend, registrerend, controlerend ten op zichte van wat? Wie zijn de kernspelers in de geld-goederenbeweging?
             \item Welke afdelingen zijn gebruikelijk in de typologie? Welke functie en verantwoordelijkheden vervullen zij?
         \end{itemize}
         \item Welke relevante BIV/AO informatie is beschikbaar voor deze typologie?
@@ -260,8 +266,6 @@ Hoe ziet de bestaande Administratieve Organisatie en Interne Beheersing van Seaf
         \end{itemize}
     \end{enumerate}
 \end{enumerate}
-
-
 
 \begin{enumerate}
     \setcounter{enumi}{1}
@@ -280,8 +284,6 @@ Hoe ziet de bestaande Administratieve Organisatie en Interne Beheersing van Seaf
     \end{enumerate}
 \end{enumerate}
 
-
-
 \begin{enumerate}
     \setcounter{enumi}{2}
     \item Hoe kan het management de bevoegdheden, verantwoordelijkheden, toezichtmaatregelen, de sturing, en beheersing formuleren ten aanzien van financiële vermogenswaarden, financiële geldstromen, financiële posities en de hieraan verbonden risico’s?
@@ -290,19 +292,20 @@ Hoe ziet de bestaande Administratieve Organisatie en Interne Beheersing van Seaf
         \item Waar kunnen risico's in het proces van geldmiddelenbeheer worden gevonden en hoe worden deze gemitigeerd?
     \end{enumerate}
 \end{enumerate}
+\end{comment}
 
 
 
-
-
-
-\begin{comment}
 
 \section{Begripsafbakening}
 Het derde onderdeel van de probleemanalyse omvat de begripsafbakening. Hierbij geef je duidelijk aan wat jij verstaat onder de begrippen die voorkomen in hoofd- en deelvragen. We noemen dit het operationaliseren van de begrippen.
 
 \section{Theoretische ondersteuning}
 \subsection{Het vakgebied}
+Deze onderzoeksopdracht valt onder de noemer 'betrouwbaarheid breed'. Deze is gericht op het inrichten van het interne betrouwbaarheidssysteem in het algemeen. Deze opdracht wordt voornamelijk toegepast bij organisaties die sterk aan het groeien zijn en die graag willen weten of de bestaande interne controlemaatregelen nog voldoende zijn. Een veel voorkomende opdracht hierbij is dat het bestaande AOIB handboek verouderd is. \citep{bivpraktijk}
+
+Bij dergelijke onderzoeken geldt het algemeen geaccepteerde \textit{COSO Internal Framework} model.
+
 Doordat deze opdracht feitelijk in twee delen is opgesplitst worden ook meerdere vakgebieden ontplooit bij de uitwerking van deze opdracht. De hoofdvraag zal voornamelijk AO-gericht zijn. Dit deel is bedoeld om de huidige administratieve organisatie / bestuurlijke informatieverzorging in kaart te brengen van Seafood Connection. Het tweede deel is in het kader van treasury management waar voornamelijk het vak financiering een rol gaat spelen, toch komen termen als hedge accounting vanuit de externe verslaggeving hier ook aan de orde.
 
 \subsection{Theoriën en modellen}
@@ -310,7 +313,7 @@ Voor de uitwerking van de AO wordt voornamelijk de theorie van Starreveld gehant
 
 Het COSO Internal Control Framework wordt nadien uitgewerkt om de organisatie als geheel te kunnen omschrijven. In deze internationale standaard komen de volgende organisatorische onderwerpen aan de orde:
 \begin{itemize}
-    \item Controleomgeving
+    \item Controle-omgeving
     \item Risicoanalyse
     \item Controle activiteiten
     \item Informatie en communicatie (managementinformatie)
@@ -318,31 +321,18 @@ Het COSO Internal Control Framework wordt nadien uitgewerkt om de organisatie al
 \end{itemize}
 Ook wordt er gebruik gemaakt van het Portermodel en het 7S-model waarmee een externe en interne analyse van de onderneming wordt uitgevoerd.
 
-\end{comment}
-
-
-
-
-
-
-
-
-
-
-
-
 
 \chapter{Competentieontwikkeling}
-\section{Persoonlijke ontwikkelpunten}
+    \section{Persoonlijke ontwikkelpunten}
 Ten behoeve van het persoonlijk functioneren en ontwikkelen voor de afronding van de bachelor opleiding accountancy, zijn de volgende ontwikkelpunten geformuleerd:
 \begin{enumerate}
     \item Er worden stappen gezet om de communicatieve vaardigheden in woord en geschrift te versterken door voor interviews (met zowel de opdrachtgever als andere betrokkenen) goed na te denken over welke informatie benodigd is en hoe deze op een zo'n neutraal mogelijke wijze kan worden geformuleerd. Taalgebruik in rapportage wordt verbeterd door meerdere reviewers te vragen kritisch te kijken naar de rapportage en te doorgronden welke fouten worden gemaakt om verdere fouten te voorkomen. 
-    \item Er wordt volgens een vast tijdsplan gestudeerd en gewerkt er een dwangmatige urgentie is om door te blijven werken. Dit wordt gerealiseerd door vaste routines op te bouwen en periodieke mijlpalen te stellen. Periodieke reflectie op de mijlpalen is hier ook belangrijk.
-    \item Er wordt beter nagedacht over de toegevoegde waarde richting een potentiële werkgever en deze wordt op een eenduidige wijze geformuleerd. Dit wordt bereikt door te werken aan zo veel mogelijk werkzaamheden die relevant zijn met de accountancy opleiding als achtergrond. Concreet moet worden geformuleerd wat welke waarde kan worden toegevoegd die een andere afgestudeerde AC-student niet zou kunnen bieden.
+    \item Er wordt volgens een vast tijdsplan gestudeerd en gewerkt zodat er een dwangmatige urgentie is om door te blijven werken. Dit wordt gerealiseerd door vaste routines op te bouwen en periodieke mijlpalen te stellen. Periodieke reflectie op de mijlpalen is hier ook belangrijk.
+    \item Er wordt beter nagedacht over de toegevoegde waarde richting een potentiële werkgever en deze wordt op een eenduidige wijze geformuleerd. Dit wordt bereikt door te werken aan zo veel mogelijk werkzaamheden die relevant zijn met de accountancy opleiding als achtergrond. Concreet moet worden geformuleerd welke waarde kan worden toegevoegd die een andere afgestudeerde AC-student niet zou kunnen aanbieden.
 \end{enumerate}
 
 \newpage
-\section{Landelijke beroepscompetenties}
+    \section{Landelijke beroepscompetenties}
 Op de Windesheim community zijn een aantal onderzoekscompetenties geformuleerd om de afstudeerstudent te helpen bij het succesvol afronden van de scriptie. Een aantal hier van hebben betrekking op dit afstudeerwerkplan. Hier wordt verder toegelicht hoe deze competenties aan de orde zijn gekomen bij het opstellen van het AWP. \\
 De afgestudeerde bachelor AC-student is in staat om: 
 \begin{enumerate}
@@ -366,31 +356,31 @@ De afgestudeerde bachelor AC-student is in staat om:
 \bigskip
 \noindent
 \textit{Ad. 4.} Het proces van het formuleren van de hoofdvraag en passende deelvragen was heel tijdrovend en was onderhevig aan veel veranderingen. Het uitwerken van meerdere mindmaps en causale veldmodellen hielpen hier enorm bij. Het zien van onderlinge verbanden was opbouwend en hielp om helder te zien hoe de opdracht opgedeeld zou moeten worden en welke informatie en deelstappen daarvoor nodig zouden moeten zijn.
-
-\bigskip
-\noindent
-\color{red} Bron community ac \color{black}
+\citep{competenties}
 
 \chapter{Tijdsplanning en communicatie}
-Om er voor te zorgen dat er consistent gewerkt wordt aan het productverslag wordt er zo veel mogelijk gehouden aan de planning en normen die de school stelt en voorschrijft. Er wordt middels een eenvoudig Excel-bestand dagelijks bijgehouden hoe het aantal uren zich verhoudt ten opzichte van de opgelegde norm vanuit school. Er wordt een veiligheidsmarge van +10\% bijgeteld boven op deze urennorm. 
+Om er voor te zorgen dat er consistent gewerkt wordt aan het productverslag wordt er zo veel mogelijk gehouden aan de planning en normen die de school stelt en voorschrijft. Er wordt middels een eenvoudig Excel-bestand dagelijks bijgehouden hoe het aantal uren zich verhoudt ten opzichte van de opgelegde norm vanuit school, zodat er elke dag inzicht is in wat ruwweg de stand is. Ook is er een geautomatiseerde grafiek ingevoegd zodat snel kan worden gezien waar de meeste uren aan worden besteed. Er wordt een veiligheidsmarge van +10\% bijgeteld boven op deze urennorm. 
 
-\begin{figure}[ht]
+\begin{figure}[h]
     \centering
-    \includegraphics[angle=0,width=\textwidth]{tijdsplanning}
-    \label{fig:tijdsplanning}
+    \includegraphics[angle=0,width=\textwidth]{logboek}
+    \label{fig:logboek}
     \caption{Fragment van het dagelijks logboek met voortgang}
 \end{figure}
 
-Dit betekent ook dat er wordt gehouden aan de gestelde mijlpalen die voorgesteld worden in de afstudeerhandleiding. Deze planning is thuis en op de werkplek snel voorhanden zodat snel kan worden gezien of het tijdsschema op de lange termijn nog overeen komt.
+Na het opstellen van het definitief afstudeerwerkplan wordt er ook een wekelijkse planning gemaakt in de takenlijst van het mailadres van de opdrachtgever. Op deze manier kunnen de begeleiders meekijken hoe de week gevuld wordt, aan welke competenties gewerkt wordt, welke informatie gecommuniceerd gaat worden, belangrijke datums etc.
 
-\begin{figure}[ht]
+\newpage
+Doordat de urennorm wordt gehanteerd voor de voortgang, betekent dit ook dat er wordt gehouden aan de gestelde mijlpalen die voorgesteld worden in de afstudeerhandleiding. Er zijn echter enkele afwijkingen, de opdracht is namelijk gestart in kalenderweek 36 dus er wordt gestreefd om alle mijlpalen een week eerder af te hebben. Daarnaast zijn er in dit AWP drie deelvragen geformuleerd, de onderlinge tijdsverdeling tussen de deelvragen zal hier dus afwijken. Deze planning is thuis en op de werkplek snel voorhanden zodat snel kan worden gezien of het tijdsschema op de lange termijn nog overeen komt.
+
+\begin{figure}[!ht]
     \centering
     \includegraphics[angle=0,width=\textwidth]{planning}
     \label{fig:planning}
     \caption{Algemene planning afstuderen}
 \end{figure}
 
-Communicatie met de afstudeerdocent vindt plaats wanneer tijdens de uitwerking van het product- of procesverslag tegen problemen aan wordt gelopen waar teveel uren verloren gaan door het probleem zelf op te lossen of in overleg met de afstudeerbegeleiders. Het contact met de docent zal dus beperkt zijn, maar uiterst hulpzaam wanneer het nodig is. Contact met de afstudeerdocent gebeurt ook bij afgesproken momenten als het bedrijfsbezoek of voor de reflectie op de functioneringsgesprekken.
+Communicatie met de afstudeerdocent vindt plaats wanneer tijdens de uitwerking van het product- of procesverslag tegen problemen aan wordt gelopen waar teveel uren verloren gaan door het probleem zelf op te lossen of in overleg met de afstudeerbegeleiders. Het contact met de docent zal dus beperkt zijn, maar uiterst behulpzaam wanneer het nodig is. Contact met de afstudeerdocent gebeurt ook bij afgesproken momenten als het bedrijfsbezoek of voor de reflectie op de functioneringsgesprekken.
 
 Communicatie met de afstudeerbegeleiders gebeurt wekelijks tijdens een vast moment op de vrijdagmiddag. Er wordt dan gereflecteerd op de werkweek en er wordt nadere bedrijfsinformatie gegeven die nuttig zal blijken aan de hand van de gemaakte planning voor de aankomende week. Deze besprekingen zijn tot nu toe tussen anderhalf en twee uur geduurd, naarmate de afstudeerstage vordert zal dit waarschijnlijk minder worden. Elke twee weken wordt een kort reflectiegesprek gehouden waarin mijn functioneren wordt besproken, dit om te voorkomen dat er bij het daadwerkelijke functioneringsgesprek geen verassingen komen. Voor korte vragen waar zelf geen antwoord op gevonden kan worden, wordt de eerste afstudeerbegeleider (J. Molenaar) ingeschakeld. Voor de grote lijnen wordt ook de tweede begeleider betrokken (L. Brouwer).
 
@@ -401,11 +391,13 @@ Communicatie met de afstudeerbegeleiders gebeurt wekelijks tijdens een vast mome
 \newpage
 \section*{Bijlagen}
 \addcontentsline{toc}{chapter}{Bijlagen}
-\subsection*{\hypertarget{bij:treasury}{Bijlage 1}: het treasury statuut}
-\addcontentsline{toc}{section}{Bijlage 1: het treasury statuut}
-\begin{figure}[ht]
+
+\stepcounter{bijlage}
+\subsection*{\hypertarget{bij:treasury}{Bijlage \thebijlage}: het treasury statuut}
+\addcontentsline{toc}{section}{Bijlage \thebijlage: het treasury statuut}
+\begin{figure}[!h]
     \centering
-    \includegraphics[angle=90,scale=0.245]{treasury}
+    \includegraphics[angle=-90,width=0.795\textwidth]{treasury}
     \label{fig:mmtreasury}
 \end{figure}
 
@@ -415,7 +407,7 @@ Communicatie met de afstudeerbegeleiders gebeurt wekelijks tijdens een vast mome
 \addcontentsline{toc}{section}{Bijlage 2: het causaal veldmodel}
 \begin{figure}[ht]
     \centering
-    \includegraphics[angle=-90,scale=0.10]{veldmodel}
+    \includegraphics[angle=-90,width=\textwidth]{veldmodel}
     \label{fig:veldmodel}
 \end{figure}
 
